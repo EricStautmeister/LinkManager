@@ -28,3 +28,10 @@ You can also print the help message or extensive help message showing all comman
 
 ## Contribute
 Download the VSCode Extension TODO Tree and help with the TODOs
+
+## License 
+This project is licensed under the MIT License - see the LICENSE.md file for details. 
+
+## Authors
+- Eric Stautmeister
+- 
