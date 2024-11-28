@@ -1,5 +1,7 @@
 import json
 from termcolor import colored
+from threading import Thread
+
 
 
 class Link:
@@ -103,41 +105,35 @@ class LinkCollection:
         print(colored("Existing Tags:", "light_blue"))
         for tag in self.tags:
             print(colored(f"{str(tag).strip()}", "light_cyan"))
+        
+    def query(self) -> list:
+        active_data: list = self.links.copy()
 
-    def query(self, text=None, cat=None, tag=None) -> list:
-        #TODO: Add multithreading
-        #TODO: Make the querying happen while the user enters the searches
-        active_data: list = []
+        def search(active_data, attribute, key, condition):
+            if key not in [None, ""]:
+                matching = [link for link in active_data if any(condition(key, s) for s in getattr(link,    attribute))]
+                if len(matching) > 0:
+                    return matching
+            return active_data
+        
+        def render_results(data):
+            print(colored("Search Results:", "red"))
+            for link in data:
+                print(
+                    colored(f"URL: {link.url} \n ", "light_magenta"),
+                    f"Categories: {str(link.categories)} \n Tags: {str(link.tags)}",
+                )
 
-        for link in self.links:
-            if cat in [None, ""]:
-                break
-            for s in link.categories:
-                if cat in s: active_data.append(link)
+        text = input(colored("Text to look for in the link:", 'light_blue'))
+        active_data = search(active_data, 'url', text, lambda key, s: key in s)
 
-        active_data = active_data if len(active_data) > 0 else self.links
-        matching_tags = []
-        for link in active_data:
-            if tag in [None, ""]:
-                break
-            for s in link.tags:
-                if tag in s:
-                    matching_tags.append(link)
-            active_data = matching_tags
+        cat = input(colored("Category to look for:", 'light_blue'))
+        active_data = search(active_data, 'categories', cat, lambda key, s: key in s)
 
-        active_data = active_data if len(active_data) > 0 else self.links
-        matching_urls = []
-        for link in active_data:
-            if text in [None, ""]:
-                break
-            if text in link.url:
-                matching_urls.append(link)
-            active_data = matching_urls
+        tag = input(colored("Tag to look for in the link:", 'light_blue'))
+        active_data = search(active_data, 'tags', tag, lambda key, s: key in s)
 
-        print(colored("Search Results:", "red"))
-        for link in active_data:
-            print(
-                colored(f"URL: {link.url} \n ", "light_magenta"),
-                f"Categories: {str(link.categories)} \n Tags: {str(link.tags)}",
-            )
+        render_results(active_data)
         return active_data
+        
+

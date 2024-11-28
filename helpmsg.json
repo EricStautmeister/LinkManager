@@ -1,0 +1,8 @@
+{
+	"base": "0. Print this message\n1. Print extensive help message\n2. Add a link\n3. List existing links\n4. List existing categories\n5. List existing tags\n6. List Entire Database\n7. Query Database\n10. Exit",
+
+    
+    "extensive": "[0, h, help]: Print help message\n[1, exh, exhelp]: Print extensive help message\n[2, add]: Add a link using the url, a category and tags\n[3, ll]: List existing links, returns only the urls\n[4, lc]: List existing categories registered in the database\n[5, lt]: List existing tags registered in the database\n[6, db, all]: List Entire Database, all link urls and their corresponding categories and tags\n[7, query, q, ?, find]: Query the database by url, category and/or tags [leave option empty if not needed]\n[8, import]: Import links from file, in the case that you modified the file during programm execution\n[9, export]: Save working memory to file\n[10, exit, close, quit]: Exit the Application"
+    
+    
+}
