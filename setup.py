@@ -1,0 +1,1 @@
+#Implement setup (%appdata% add db, add script to path)

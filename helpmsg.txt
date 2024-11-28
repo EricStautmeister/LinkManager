@@ -1,0 +1,9 @@
+0. Print this message
+1. Import links from file
+2. Export links to file
+3. Add a link
+4. List existing links
+5. List existing categories
+6. List existing tags
+7. List Entire Database
+8. Exit
