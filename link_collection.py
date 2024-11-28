@@ -1,11 +1,12 @@
 import json
 from link import Link, LinkCollection
 from termcolor import colored
+from setup import db_setup
 
 # Main program loop
-def main():
+def main(db_path):
     """Setup"""
-    link_collection = LinkCollection()
+    link_collection = LinkCollection(db_path)
     link_collection.import_from_file()
     helpmsg = ""
 
@@ -20,15 +21,16 @@ def main():
 
             #TODO: Implement Query method into cli interface
             match choice:
-                case 0:
+                case '0', 'h', 'help':
                     print(helpmsg)
-                case '1':
+                    #TODO: Add more help info by adding choise to quit help menu or get more info on the option
+                case '1', 'import':
                     link_collection.import_from_file()
-                case '2':
+                case '2', 'export':
                     link_collection.export_to_file()
-                case '3':
+                case '3', 'add':
                     link_collection.add_link()
-                case '4':
+                case '4', 'll':
                     link_collection.list_links()
                 case '5':
                     link_collection.list_categories()
@@ -36,7 +38,12 @@ def main():
                     link_collection.list_tags()
                 case '7':
                     link_collection.list_all()
-                case "8":
+                case '8':
+                    text = input(colored("Text to look for in the link:", 'light_blue'))
+                    cat = input(colored("Category to look for:", 'light_blue'))
+                    tag = input(colored("Tag to look for in the link:", 'light_blue'))
+                    link_collection.query(text, cat, tag)
+                case "9", 'exit', 'close':
                     link_collection.export_to_file()
                     break
                 case _:
@@ -54,4 +61,5 @@ def main():
 
 # Run the main program
 if __name__ == "__main__":
-    main()
+    db_path = db_setup()
+    main(db_path)

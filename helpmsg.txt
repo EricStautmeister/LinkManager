@@ -6,4 +6,5 @@
 5. List existing categories
 6. List existing tags
 7. List Entire Database
-8. Exit
+8. Query links
+9. Exit

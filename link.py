@@ -1,6 +1,7 @@
 import json
 from termcolor import colored
 
+
 class Link:
     def __init__(self, url, categories=None, tags=None):
         self.url = url
@@ -20,55 +21,59 @@ class Link:
     def remove_tag(self, tag):
         if tag in self.tags:
             self.tags.remove(tag)
-    
+
     def to_json(self):
-        link_data = {
-            'url': self.url,
-            'categories': self.categories,
-            'tags': self.tags
-        }
+        link_data = {"url": self.url, "categories": self.categories, "tags": self.tags}
         return json.dumps(link_data)
 
     def __repr__(self):
-        return f"Link(url='{self.url}'\ncategories:{self.categories}\n tags:{self.tags})"
+        return (
+            f"Link(url='{self.url}'\ncategories:{self.categories}\n tags:{self.tags})"
+        )
 
 
 class LinkCollection:
-    def __init__(self):
+    def __init__(self, db_path):
         self.links = []
         self.categories = []
         self.tags = []
-        self.db = 'links.json'
+        self.db = db_path
 
     def import_from_file(self):
         try:
-            with open(self.db, 'r') as f:
+            with open(self.db, "r") as f:
                 data = json.load(f)
 
-        
-                self.categories = data.get('categories', [])
-                self.tags = data.get('tags', [])
+                self.categories = data.get("categories", [])
+                self.tags = data.get("tags", [])
 
-                for link_data in data.get('links', []):
-                    link = Link(link_data['url'], link_data['categories'], link_data['tags'])
+                for link_data in data.get("links", []):
+                    link = Link(
+                        link_data["url"], link_data["categories"], link_data["tags"]
+                    )
                     self.links.append(link)
         except FileNotFoundError:
             print("File not found.")
 
-
     def export_to_file(self):
         data = {
-                "links": [{'url': link.url, 'categories': link.categories, 'tags': link.tags} for link in self.links],
-                "categories": self.categories,
-                "tags": self.tags  # Assuming you want to add links into "tags". If not, update this.
-                }
-        with open(self.db, 'w') as f:
+            "links": [
+                {"url": link.url, "categories": link.categories, "tags": link.tags}
+                for link in self.links
+            ],
+            "categories": self.categories,
+            "tags": self.tags, 
+        }
+        with open(self.db, "w") as f:
             json.dump(data, f)
-    
+
     def add_link(self):
         url = input("Enter the URL: ")
-        category = [cat.strip() for cat in input("Enter the category: ").split(',')]
-        tags = [tag.strip() for tag in input("Enter the tags (comma-separated): ").split(',')]
+        category = [cat.strip() for cat in input("Enter the category: ").split(",")]
+        tags = [
+            tag.strip()
+            for tag in input("Enter the tags (comma-separated): ").split(",")
+        ]
         link = Link(url, category, tags)
         self.links.append(link)
         if type(category) == list and len(category) > 0:
@@ -79,38 +84,60 @@ class LinkCollection:
 
     def list_all(self):
         for link in self.links:
-            print(colored(f'URL: {link.url} \n ', 'light_magenta'), f'Categories: {str(link.categories)} \n Tags: {str(link.tags)}')
+            print(
+                colored(f"URL: {link.url} \n ", "light_magenta"),
+                f"Categories: {str(link.categories)} \n Tags: {str(link.tags)}",
+            )
 
     def list_links(self):
         print("Existing Links:")
         for link in self.links:
-            print(f'{link.url}')
+            print(f"{link.url}")
 
     def list_categories(self):
-        print("Existing Categories:")
-        for link in self.links:
-            print(f'{str(link.categories)}')
+        print(colored("Existing Categories:", "light_blue"))
+        for cat in self.categories:
+            print(colored(f"{str(cat).strip()}", "light_cyan"))
 
     def list_tags(self):
-        print("Existing Tags:")
-        for link in self.links:
-            print(f'{str(link.tags)}')
+        print(colored("Existing Tags:", "light_blue"))
+        for tag in self.tags:
+            print(colored(f"{str(tag).strip()}", "light_cyan"))
 
     def query(self, text=None, cat=None, tag=None) -> list:
-        active_data:list = []
-        
-        for link in self.links:
-            if cat in [None, ""]: break
-            active_data = [s for s in link.categories if cat in s]
-        for link in self.links:
-            if tag in [None, ""]: break
-            active_data = active_data if len(active_data) > 0 else link.tags
-            matching_tags = [s for s in link.tags if cat in s]
-            active_data = matching_tags
-        for link in self.links:
-            if text in [None, ""]: break
-            active_data = active_data if len(active_data) > 0 else link.tags
-            matching_links = [s for s in active_data if cat in s]
-            active_data = matching_links
+        #TODO: Add multithreading
+        #TODO: Make the querying happen while the user enters the searches
+        active_data: list = []
 
+        for link in self.links:
+            if cat in [None, ""]:
+                break
+            for s in link.categories:
+                if cat in s: active_data.append(link)
+
+        active_data = active_data if len(active_data) > 0 else self.links
+        matching_tags = []
+        for link in active_data:
+            if tag in [None, ""]:
+                break
+            for s in link.tags:
+                if tag in s:
+                    matching_tags.append(link)
+            active_data = matching_tags
+
+        active_data = active_data if len(active_data) > 0 else self.links
+        matching_urls = []
+        for link in active_data:
+            if text in [None, ""]:
+                break
+            if text in link.url:
+                matching_urls.append(link)
+            active_data = matching_urls
+
+        print(colored("Search Results:", "red"))
+        for link in active_data:
+            print(
+                colored(f"URL: {link.url} \n ", "light_magenta"),
+                f"Categories: {str(link.categories)} \n Tags: {str(link.tags)}",
+            )
         return active_data
