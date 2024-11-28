@@ -64,13 +64,11 @@ def main(db_path):
         print("\nProgram interrupted. Saving data...")
     finally:
         try:
-            # Always attempt to save the data to the default file
             link_collection.export_to_file()
             print("Link data saved successfully.")
         except Exception as e:
             print("Could not save link data. Reason:", e)
 
-# Run the main program
 if __name__ == "__main__":
     db_path = db_setup()
     main(db_path)
