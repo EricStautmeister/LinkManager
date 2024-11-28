@@ -18,6 +18,13 @@ Clone the repository to your local machine, navigate to the project directory, t
 git clone https://github.com/user/linkManager.git
 cd linkManager
 pip install termcolor
+```
+
+## Executing the Program
+Run the script using Python 3. It was developed using python 3.11
+The entry file is link_collection.py
+
+```
 python link_collection.py
 ```
 
