@@ -3,7 +3,7 @@ from termcolor import colored
 from threading import Thread
 
 
-
+#TODO: Add a Link Description Property
 class Link:
     def __init__(self, url, categories=None, tags=None):
         self.url = url
@@ -106,6 +106,7 @@ class LinkCollection:
         for tag in self.tags:
             print(colored(f"{str(tag).strip()}", "light_cyan"))
         
+    #TODO: After implementing Link Description, make text search available
     def query(self) -> list:
         active_data: list = self.links.copy()
 

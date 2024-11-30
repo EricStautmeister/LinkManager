@@ -31,9 +31,8 @@ def main(db_path):
         while True:
             
             choice = input("Enter your choice (0-7): ")
-
-            #TODO: Implement Query method into cli interface
-            #TODO: Create a help message manager
+            
+            #TODO: Add link management, such that you can edit link properties and delete the link
             if choice in {'0', 'h', 'help'}:
                 help.base_msg()
             elif choice in {'1', 'exh', 'exhelp'}:
