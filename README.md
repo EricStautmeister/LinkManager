@@ -16,7 +16,7 @@ Clone the repository to your local machine, navigate to the project directory, t
 
 ```
 git clone https://github.com/user/linkManager.git
-cd linkManager
+cd LinkCollection
 pip install termcolor
 ```
 
