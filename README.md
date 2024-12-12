@@ -11,15 +11,12 @@ The program requires Python 3+, and relies on the following Python libraries:
 
 - termcolor
 
-```
-pip install termcolor
-```
 
 ### Installing
 Clone the repository to your local machine, navigate to the project directory, then install any missing dependencies using pip.
 
 ```
-git clone https://github.com/user/linkManager.git
+git clone https://github.com/EricStautmeister/LinkCollector.git
 cd LinkCollection
 pip install termcolor
 ```
