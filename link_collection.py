@@ -33,6 +33,7 @@ def main(db_path):
             choice = input("Enter your choice (0-7): ")
             
             #TODO: Add link management, such that you can edit link properties and delete the link
+            #TODO: Add multiple links from a csv or similar format
             if choice in {'0', 'h', 'help'}:
                 help.base_msg()
             elif choice in {'1', 'exh', 'exhelp'}:

@@ -9,7 +9,11 @@ This application also provides a built-in interface to query data, and import/ex
 ### Dependencies
 The program requires Python 3+, and relies on the following Python libraries:
 
-termcolor
+- termcolor
+
+```
+pip install termcolor
+```
 
 ### Installing
 Clone the repository to your local machine, navigate to the project directory, then install any missing dependencies using pip.
