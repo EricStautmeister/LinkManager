@@ -2,26 +2,24 @@ import os
 import sys
 import shutil
 
-def db_setup():
-    home_directory = os.path.expanduser('~')
+def db_setup() -> str:
     link_dir = "LinkCollection"
     db_name = "links.json"
 
-    if home_directory:
-        link_collection_dir = os.path.join(home_directory, link_dir)
-        if not os.path.exists(link_collection_dir):
-            os.mkdir(link_collection_dir)
-        
-        db_path = os.path.join(link_collection_dir, db_name)
-
-        if not os.path.exists(db_path): 
-            with open(db_path, 'w') as db: 
-                print(f'Database created under: {db_path}')
-
-        return db_path
-
-    else:
+    if not (home_directory := os.path.expanduser('~')):
         raise EnvironmentError("User Directory not found.")
+    
+    link_collection_dir = os.path.join(home_directory, link_dir)
+    if not os.path.exists(link_collection_dir):
+        os.mkdir(link_collection_dir)
+
+    db_path = os.path.join(link_collection_dir, db_name)
+
+    if not os.path.exists(db_path): 
+        with open(db_path, 'w') as db: 
+            print(f'Database created under: {db_path}')
+
+    return db_path
     
 #TODO: File is not callable globally after installing using this script. Extension Association .py is set to python3.11. See if it can be fixed
 def move_program_to_global_env():

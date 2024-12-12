@@ -18,53 +18,53 @@ class help_manager():
         extensivemsg = self.helpdata["extensive"]
         print(colored(extensivemsg, 'light_cyan'))
 
-# Main program loop
+
+
 def main(db_path):
     """Setup"""
     link_collection = LinkCollection(db_path)
-    link_collection.import_from_file()
+    link_collection.load_from_db()
     
     help = help_manager()
 
     try:
         help.base_msg()
+        print("\nEnter Command")
         while True:
-            
-            choice = input("Enter your choice (0-7): ")
+            choice = input("[>>]: ")
             
             #TODO: Add link management, such that you can edit link properties and delete the link
             #TODO: Add multiple links from a csv or similar format
-            if choice in {'0', 'h', 'help'}:
-                help.base_msg()
-            elif choice in {'1', 'exh', 'exhelp'}:
-                help.extensive_msg()
-            elif choice in {'2', 'add'}:
-                link_collection.add_link()
-            elif choice in {'3', 'll'}:
-                link_collection.list_links()
-            elif choice in {'4', 'lc'}:
-                link_collection.list_categories()
-            elif choice in {'5', 'lt'}:
-                link_collection.list_tags()
-            elif choice in {'6', 'db', 'all'}:
-                link_collection.list_all()
-            elif choice in {'7', 'query', 'q', '?', 'find'}:
-                link_collection.query()
-            elif choice in {'8', 'import'}:
-                link_collection.import_from_file()
-            elif choice in {'9', 'export'}:
-                link_collection.export_to_file()
-            elif choice in {'10', 'exit', 'close', 'quit'}:
-                link_collection.export_to_file()
-                break
-            else:
-                print("Invalid choice. Please try again.\n")
+            match choice:
+                case '0' | 'h' | 'help':
+                    help.base_msg()
+                case '1' | 'exh' | 'exhelp':
+                    help.extensive_msg()
+                case '2':
+                    link_collection.add_link()
+                case '3' | 'll':
+                    link_collection.list_links()
+                case '4' | 'lc':
+                    link_collection.list_categories()
+                case '5' | 'lt':
+                    link_collection.list_tags()
+                case '6' | 'db' | 'all':
+                    link_collection.list_all()
+                case '7' | 'query' | 'q' | '?' | 'find':
+                    link_collection.query()
+                case '8' | 'import' | '9' | 'export':
+                    link_collection.save_to_db()
+                case '10' | 'exit' | 'close' | 'quit':
+                    link_collection.save_to_db()
+                    exit()
+                case _:
+                    print("Invalid choice. Please try again.\n")
     
     except (KeyboardInterrupt, SystemExit):
         print("\nProgram interrupted. Saving data...")
     finally:
         try:
-            link_collection.export_to_file()
+            link_collection.save_to_db()
             print("Link data saved successfully.")
         except Exception as e:
             print("Could not save link data. Reason:", e)
