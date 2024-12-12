@@ -48,12 +48,6 @@ class LinkCollection:
         self.tags: list[str] = []
         self.db = db_path
 
-    def save_wrapper(self, func):
-        def threaded_daemon_save_wrapper(*args, **kwargs):
-            result = func(*args, **kwargs) 
-            Thread(target=self.save_to_db, args=(), daemon=True).start()
-            return result
-        return threaded_daemon_save_wrapper
 
     def load_from_db(self):
         try:
@@ -93,7 +87,6 @@ class LinkCollection:
         with open(self.db, "w") as f:
             json.dump(data, f)
 
-    @save_wrapper
     def add_link(self):
         url = input("URL: ")
         description = input("Description:")
@@ -126,14 +119,14 @@ class LinkCollection:
         if type(tags) == list and tags:
             self.tags = list(set(self.tags) | set(tags))
         print("Link added successfully!")
-    @save_wrapper
+
     def update_link_url(self, index, new_url):
         if index < len(self.links):
             self.links[index].update_url(new_url)
             print("Link updated")
         else:
             raise IndexError("Index is out of range.")
-    @save_wrapper
+
     def update_link_description(self, index, new_description):
         if index < len(self.links):
             self.links[index].update_description(new_description)
@@ -164,7 +157,6 @@ class LinkCollection:
         else:
             raise IndexError("Index is out of range.")
 
-    @save_wrapper
     def add_link_category(self, index, category):
         if index < len(self.links):
             self.links[index].add_category(category)
@@ -201,12 +193,12 @@ class LinkCollection:
     def list_categories(self):
         print(colored("Existing Categories:", "light_blue"))
         for cat in self.categories:
-            print(colored(f"{str(cat).strip()}", "light_cyan"))
+            print(colored(f"{str(cat).strip()}", "light_magenta"))
 
     def list_tags(self):
         print(colored("Existing Tags:", "light_blue"))
         for tag in self.tags:
-            print(colored(f"{str(tag).strip()}", "light_cyan"))
+            print(colored(f"{str(tag).strip()}", "light_magenta"))
 
     # TODO: After implementing Link Description, make text search available
     def query(self) -> list:
