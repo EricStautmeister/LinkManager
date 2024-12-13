@@ -33,7 +33,6 @@ def main(db_path):
             choice = input("[>>]: ")
             
             #TODO: Add link management, such that you can edit link properties and delete the link
-            #TODO: Add multiple links from a csv or similar format
             #TODO: Implement functionality for the new Class Methods on LinkManager
             match choice:
                 case '0' | 'h' | 'help':
