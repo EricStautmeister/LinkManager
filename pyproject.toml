@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "link collection"
+version = "0.1.4"
+description = "A command line interface for managing and querying a personal collection of links."
+authors = ["Eric Stautmeister"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+termcolor = "^2.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

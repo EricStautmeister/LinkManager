@@ -1,3 +1,4 @@
+import os
 import json
 from termcolor import colored
 from threading import Thread
@@ -57,7 +58,7 @@ class Link:
 # FIXME: Test addition, deletion and update methods
 
 
-class LinkCollection:
+class LinkManager:
     """
     Represents a collection of links with associated categories and tags.
 
@@ -87,6 +88,18 @@ class LinkCollection:
         self.tags: list[str] = []
         self.db = db_path
 
+    def bulk_import(self):
+        """
+            Import data from a csv or a text file in csv.
+        """
+        try:
+            file_path = os.path(input("File to import (with file path)"))
+            with open(file_path, "r+") as f:
+                data = f.readlines()
+
+        except Exception as e:
+            print(e)
+
     def load_from_db(self):
         try:
             with open(self.db, "r") as f:
@@ -108,6 +121,7 @@ class LinkCollection:
         except Exception as e:
             print(e)
 
+    #TODO: Add multiple links from a csv or similar format    
     def save_to_db(self):
         data = {
             "links": [
@@ -127,22 +141,22 @@ class LinkCollection:
 
     def add_link(self):
         url = input("URL: ")
-        description = input("Description:")
+        description = input("Description: ")
 
         print(
             r"For an overview of all categories or tags, enter '#' in the respective field"
         )
 
-        category = input("Category: ")
-        match category.strip():
+        category = input("Category ('#' for all existing categories): ").strip()
+        match category:
             case "#":
                 for cat in self.categories:
                     print(cat)
             case _:
                 category = [cat.strip() for cat in category.split(",")]
 
-        tags = input("Tags (comma-separated): ")
-        match category.strip():
+        tags = input("Tags (comma-separated, '#' for all existing tags): ")
+        match category:
             case "#":
                 for tag in self.tags:
                     print(tag)

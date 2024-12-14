@@ -3,7 +3,7 @@ import sys
 import shutil
 
 def db_setup() -> str:
-    link_dir = "LinkCollection"
+    link_dir = "LinkManager"
     db_name = "links.json"
 
     if not (home_directory := os.path.expanduser('~')):
@@ -23,7 +23,7 @@ def db_setup() -> str:
     
 #TODO: File is not callable globally after installing using this script. Extension Association .py is set to python3.11. See if it can be fixed
 def move_program_to_global_env():
-    entry_file = "link_collection.py"
+    entry_file = "link_manager.py"
     ignore_list = ['.gitignore', '.git', 'whiteboard.txt', '__pycache__']
 
     def get_files(path):
@@ -42,7 +42,7 @@ def move_program_to_global_env():
 
 if __name__ == "__main__":
     home_directory = os.path.expanduser('~')
-    link_dir = "LinkCollection"
+    link_dir = "LinkManager"
     app_dir = os.path.join(home_directory, link_dir)
 
     db_path = db_setup()
