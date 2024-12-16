@@ -3,39 +3,40 @@ A command line interface for managing and querying collections of links.
 
 ## Description
 The LinkManager is a Python application that allows you to organize a collection of web links by categories and tags. Link data is organized via a LinkManager object, which is stored in JSON format.
-This application also provides a built-in interface to query data, and import/export data from/to a JSON file. The interface options include adding a new link, listing all existing links, categories or tags, querying specific links, and exiting the application.
+This application also provides a built-in interface to query data, and import/export data from/to a JSON file. The interface options include adding a new link, listing all existing links, categories or tags, and querying specific links by the previously mentioned categories, and exiting the applicatio.
 
 ## Getting Started
 ### Dependencies
 The program requires Python 3+, and relies on the following Python libraries:
 
-- termcolor
+- setuptools >= 75.6.0
+- termcolor >= 2.5.0
 
 
 ### Installing
-Clone the repository to your local machine, navigate to the project directory, then install any missing dependencies using pip.
+Clone the repository to your local machine, navigate to the project directory, then install any missing dependencies using pip. The "-e" flag is optional, and only necessary if you plan on doing dev work on the project. 
 
-```
+```bash
 git clone https://github.com/EricStautmeister/LinkManager.git
 cd LinkManager
-pip install termcolor
+pip install --upgrade setuptools[core], setuptools, termcolor
+pip install -e .
 ```
 
 ## Executing the Program
-Run the script using Python 3. It was developed using python 3.11
-The entry file is link_manager.py
-
-```
-python link_manager.py
+After running the above pip installs, you can call the app from anywhere using:
+```bash
+LinkManager
 ```
 
-## Help
-After executing the program, you will be prompted with a series of choices to interact with your LinkManager. You can input the number or the character associated with your desired action.
-
-You can also print the help message or extensive help message showing all commands by typing '0', 'h', 'help' or '1', 'exh', 'exhelp' respectively.
+### Build binary and source distribution
+To build both a binary distribution (wheel) and a source distribution (sdist) run the following:
+```bash
+python setup.py bdist_wheel sdist
+```
 
 ## Contribute
-Download the VSCode Extension TODO Tree and help with the TODOs
+Download the VSCode Extension TODO Tree and help with the TODOs and FIXMEs
 
 ## License 
 This project is licensed under the MIT License - see the LICENSE.md file for details. 
