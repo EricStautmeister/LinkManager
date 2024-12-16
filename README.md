@@ -29,6 +29,9 @@ After running the above pip installs, you can call the app from anywhere using:
 LinkManager
 ```
 
+## Programm information
+The Programm will upon running it the first time create a JSON file in a Folder called "LinkManager" under the users home directory. This file acts as the database for the link collection. 
+
 ### Build binary and source distribution
 To build both a binary distribution (wheel) and a source distribution (sdist) run the following:
 ```bash
