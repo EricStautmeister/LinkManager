@@ -136,6 +136,7 @@ class LinkManager:
             "categories": self.categories,
             "tags": self.tags,
         }
+        print(f"DB location: {self.db}")
         with open(self.db, "w") as f:
             json.dump(data, f)
 

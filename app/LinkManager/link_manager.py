@@ -1,16 +1,13 @@
 import json
-import click
-from link import Link, LinkManager
+from . import Link, LinkManager, helpmsg
 from termcolor import colored
-from setup import db_setup
+import time
+import os
 
 
 class help_manager:
     def __init__(self):
-        self.helpdata = None
-
-        with open("helpmsg.json", "r") as h:
-            self.helpdata = json.load(h)
+        self.helpdata = helpmsg()
 
     def base_msg(self):
         basemsg = self.helpdata["base"]
@@ -20,8 +17,29 @@ class help_manager:
         extensivemsg = self.helpdata["extensive"]
         print(colored(extensivemsg, "light_magenta"))
 
+#FIXME: Just a Note: This might be buggy. Changing the install scripts and Project setup overwrote my previous db. However it appears to still work as I could not reproduce this. 
+def db_setup():
+    link_dir = "LinkManager"
+    db_name = "links.json"
 
-def main(db_path):
+    if not (home_directory := os.path.expanduser('~')):
+        raise EnvironmentError("User Directory not found.")
+    
+    link_collection_dir = os.path.join(home_directory, link_dir)
+    if not os.path.exists(link_collection_dir):
+        os.mkdir(link_collection_dir)
+
+    db_path = os.path.join(link_collection_dir, db_name)
+
+    if not os.path.exists(db_path): 
+        with open(db_path, 'w') as db: 
+            print(f'Database created under: {db_path}')
+
+    return db_path
+
+
+def main():
+    db_path = db_setup()
     """Setup"""
     link_collection = LinkManager(db_path)
     link_collection.load_from_db()
@@ -73,5 +91,8 @@ def main(db_path):
 
 
 if __name__ == "__main__":
-    db_path = db_setup()
-    main(db_path)
+    main()
+    
+
+    
+
