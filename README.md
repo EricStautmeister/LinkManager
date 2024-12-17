@@ -3,7 +3,7 @@ A command line interface for managing and querying collections of links.
 
 ## Description
 The LinkManager is a Python application that allows you to organize a collection of web links by categories and tags. Link data is organized via a LinkManager object, which is stored in JSON format.
-This application also provides a built-in interface to query data, and import/export data from/to a JSON file. The interface options include adding a new link, listing all existing links, categories or tags, and querying specific links by the previously mentioned categories, and exiting the applicatio.
+This application also provides a built-in interface to query data, and import/export data from/to a JSON file. The interface options include adding a new link, listing all existing links, categories or tags, and querying specific links by the previously mentioned categories, and exiting the application.
 
 ## Getting Started
 ### Dependencies
