@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 if __name__ == "__main__":
     setup(
         name = 'LinkManager',
-        version = '0.0.2',
+        version = '0.1.0',
         desciption="A command line interface for managing and querying collections of links.",
         package_dir={"": "app"},
         packages=find_packages(where="app"),
